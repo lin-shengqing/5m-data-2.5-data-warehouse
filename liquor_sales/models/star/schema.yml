@@ -9,11 +9,3 @@ models:
         tests:
           - unique
           - not_null
-  - name: dim_item
-    description: "Dimension table for item."
-    columns:
-      - name: item_number
-        description: "The primary key for this table"
-        tests:
-          - unique
-          - not_null

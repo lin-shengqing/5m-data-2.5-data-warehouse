@@ -23,7 +23,16 @@ SELECT
   
   -- End station
   t.end_station_id,
-  t.end_station_name
+  t.end_station_name,
+
+  -- total_duration (sum of duration for each station in seconds)
+  SUM(t.duration_minutes * 60) OVER (PARTITION BY t.start_station_id) AS total_duration,
+
+  -- total_starts (count of start_station_name for each station)
+  COUNT(t.start_station_name)OVER (PARTITION BY t.start_station_id) AS total_starts,
+  
+  -- total_ends (count of end_station_name for each station)
+  COUNT(t.end_station_name)OVER (PARTITION BY t.end_station_id) AS total_ends
 
 FROM {{ ref('stg_bikeshare_trips') }} t
 
